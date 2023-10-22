@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+    <book>
+        <title>Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch</title>
+        <author_1>Neil Gaiman</author_1>
+        <author_2>Terry Pratchett</author_2>
+        <attribute_1>Fantasy</attribute_1>
+        <attribute_2>Humor</attribute_2>
+    </book>
+    <book>
+        <title>The Federalist Papers</title>
+        <author_1>Alexander Hamilton</author_1>
+        <author_2>James Madison</author_2>
+        <author_3>John Jay</author_3>
+        <attribute_1>Founding document of the United States</attribute_1>
+        <attribute_2>Persuasive</attribute_2>
+    </book>
+    <book>
+        <title>Principia Mathematica</title>
+        <author_1>Alfred North Whitehead</author_1>
+        <author_2>Bertrand Russell</author_2>
+        <attribute_1>Landmark work in mathematical logic</attribute_1>
+        <attribute_2>Influential</attribute_2>
+    </book>
+</books>

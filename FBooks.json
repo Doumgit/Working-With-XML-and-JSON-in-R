@@ -1,0 +1,24 @@
+[
+    {
+        "title": "Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",
+        "author_1": "Neil Gaiman",
+        "author_2": "Terry Pratchett",
+        "attribute_1": "Fantasy",
+        "attribute_2": "Humor"
+    },
+    {
+        "title": "The Federalist Papers",
+        "author_1": "Alexander Hamilton",
+        "author_2": "James Madison",
+        "author_3": "John Jay",
+        "attribute_1": "Founding document of the United States",
+        "attribute_2": "Persuasive"
+    },
+    {
+        "title": "Principia Mathematica",
+        "author_1": "Alfred North Whitehead",
+        "author_2": "Bertrand Russell",
+        "attribute_1": "Landmark work in mathematical logic",
+        "attribute_2": "Influential"
+    }
+]
