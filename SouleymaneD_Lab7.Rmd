@@ -1,0 +1,100 @@
+---
+title: "Souleymane_Lab7 Working with XML, JSON, HTML in R"
+author: "Souleymane Doumbia"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries}
+#install.packages('rvest')
+#install.packages('XML')               
+#install.packages('jsonlite')  
+
+library(rvest)
+library(XML)
+library(jsonlite)
+library(httr)
+
+```
+
+
+```{r Reading html, and json file}
+
+# Reading from HTML, also you can access this html text file directly on the web by clicking on the link below.
+gitHtml <- "https://raw.githubusercontent.com/Doumgit/Working-With-XML-and-JSON-in-R/main/FBooks.html"
+FBooksHtml <- gitHtml %>% 
+  read_html() %>%
+  html_table(fill = TRUE) %>%
+  .[[1]]
+head(FBooksHtml)
+
+
+# Reading from JSON, also you can access this json text file directly on the web by clicking on the link below.
+gitJson <- "https://raw.githubusercontent.com/Doumgit/Working-With-XML-and-JSON-in-R/main/FBooks.json"
+FBooksJson <- fromJSON(gitJson, flatten = TRUE)
+head(FBooksJson)
+```
+
+
+```{r Getting the xml file from github}
+
+# Fetching the content, also you can access this xml text file directly on the web by clicking on the link below.
+gitXML <- GET("https://raw.githubusercontent.com/Doumgit/Working-With-XML-and-JSON-in-R/main/FBooks.xml")
+
+# Ensuring the request was successful
+if (http_status(gitXML)$category == "Success") {
+   FBooksXml1 <- xmlParse(content(gitXML, as = "text", encoding = "UTF-8"))
+  
+} else {
+  stop("Failed to fetch the XML from GitHub.")
+}
+```
+
+```{r Reading the xml file}
+
+# Extracting book nodes
+FBooksXml2 <- getNodeSet(FBooksXml1, "//book")
+
+# Function to parse each book
+parseBook <- function(book) {
+  
+  title <- xpathSApply(book, "./title", xmlValue)
+  
+  author_1 <- xpathSApply(book, "./author_1", xmlValue)
+  author_2 <- xpathSApply(book, "./author_2", xmlValue)
+  author_3 <- xpathSApply(book, "./author_3", xmlValue)
+  
+  attribute_1 <- xpathSApply(book, "./attribute_1", xmlValue)
+  attribute_2 <- xpathSApply(book, "./attribute_2", xmlValue)
+  attribute_3 <- xpathSApply(book, "./attribute_3", xmlValue)
+  
+  data.frame(
+    title = ifelse(length(title) > 0, title, NA),
+    author_1 = ifelse(length(author_1) > 0, author_1, NA),
+    author_2 = ifelse(length(author_2) > 0, author_2, NA),
+    author_3 = ifelse(length(author_3) > 0, author_3, NA),
+    attribute_1 = ifelse(length(attribute_1) > 0, attribute_1, NA),
+    attribute_2 = ifelse(length(attribute_2) > 0, attribute_2, NA),
+    attribute_3 = ifelse(length(attribute_3) > 0, attribute_3, NA),
+    stringsAsFactors = FALSE
+  )
+}
+
+FBooksXml3 <- lapply(FBooksXml2, parseBook)
+FBooksXml4 <- do.call(rbind, FBooksXml3)
+head(FBooksXml4)
+```
+
+```{r Comparing the three dataframes}
+
+# Checking if the dataframes are identical
+identical(FBooksHtml, FBooksXml4) 
+identical(FBooksHtml, FBooksJson)  
+identical(FBooksXml4, FBooksJson)  
+```
+
+**The three dataframes are not identical between each other**
